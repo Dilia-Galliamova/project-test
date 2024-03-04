@@ -3,7 +3,7 @@
 
 Доступны следующие функции:
 - регистрация пользователя
-- создание и редактирование объявлений с тектовым и мультимедийным контентом
+- создание и редактирование объявлений с текстовым и мультимедийным контентом
 - просмотр, удаление и прием откликов в личном кабинете
 - получение email-уведомлений о действиях
 - новостные рассылки для пользователей
@@ -11,17 +11,22 @@
 ## Запуск проекта
 Для запуска в среде PyCharm необходимо:
 - активировать виртуальную машину `venv\scripts\activate`
-- перейти в в папку pereval `cd pereval`
+- перейти в в папку проекта `cd announcement`
 - запустить сервер `python manage.py runserver`
 
-Rest API работает с базой данных Posgresql, параметры подключения к БД реализованы через переменные окружения:
+Данные 
 ```
-name='DATABASE_NAME'
-user='DATABASE_USER'
-password='DATABASE_PASSWORD'
-host='DATABASE_HOST'
-port='DATABASE_PORT'
+EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
+EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
+EMAIL_HOST_USER = 'mytestemailDilia'  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
+EMAIL_HOST_PASSWORD = 'w99JEThh8T9BgnG'  # пароль от почты
 ```
+
+DEFAULT_FROM_EMAIL = 'mytestemailDilia@yandex.ru'
+
+
+CELERY_BROKER_URL = 'redis://default:1PUAyUM7pMkVao0OLIWXSxsz0EqEvzzJ@redis-13662.c299.asia-northeast1-1.gce.cloud.redislabs.com:13662'
+CELERY_RESULT_BACKEND = 'redis://default:1PUAyUM7pMkVao0OLIWXSxsz0EqEvzzJ@redis-13662.c299.asia-northeast1-1.gce.cloud.redislabs.com:13662'
 
 ## Внесение информации о новом объекте
 Для внесения информации о новом объекте необходимо ввести в строку `http://127.0.0.1:8000/post/`

@@ -14,95 +14,15 @@
 - перейти в в папку проекта `cd announcement`
 - запустить сервер `python manage.py runserver`
 
-Данные 
+Следующие конфиденциальные параметры в gitignore:
 ```
-EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
-EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
-EMAIL_HOST_USER = 'mytestemailDilia'  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
-EMAIL_HOST_PASSWORD = 'w99JEThh8T9BgnG'  # пароль от почты
+SECRET_KEY
+EMAIL_HOST
+EMAIL_PORT
+EMAIL_HOST_USER 
+EMAIL_HOST_PASSWORD
+DEFAULT_FROM_EMAIL
+CELERY_BROKER_URL
+CELERY_RESULT_BACKEND
+
 ```
-
-DEFAULT_FROM_EMAIL = 'mytestemailDilia@yandex.ru'
-
-
-CELERY_BROKER_URL = 'redis://default:1PUAyUM7pMkVao0OLIWXSxsz0EqEvzzJ@redis-13662.c299.asia-northeast1-1.gce.cloud.redislabs.com:13662'
-CELERY_RESULT_BACKEND = 'redis://default:1PUAyUM7pMkVao0OLIWXSxsz0EqEvzzJ@redis-13662.c299.asia-northeast1-1.gce.cloud.redislabs.com:13662'
-
-## Внесение информации о новом объекте
-Для внесения информации о новом объекте необходимо ввести в строку `http://127.0.0.1:8000/post/`
-
-Данные передаются в формате JSON в виде:
-```
-{
-    {
-        "user": {
-            "email": "user@mail.ru",
-            "first_name": "Петр",
-            "last_name": "Петров",
-            "father_name": "Петрович",
-            "phone": "78008888888"
-        },
-        "coords": {
-            "latitude": 26.4324,
-            "longitude": 43.4565,
-            "height": 2500
-        },
-        "image":[ 
-	      {
-                "title": "вершина",
-                "image": "<картинка1>",
-        },
-        {
-                "title": "вершина2",
-                "image": "<картинка2>",
-        }     
-        ],
-        "beauty_title": "холм",
-        "title": "Шерегеш",
-        "other_title": "Горнолыжка",
-        "connect": "",
-        "level_summer": "",
-        "level_autumn": "",
-        "level_winter": "",
-        "level_spring": "",
-        "date_added": "2020-6-12 14:18:15"
-}
-```
-Картинки загружаются в формате Base64 в неограниченном количестве.
-
-Результат метода:
-- status — код HTTP, целое число:
-   - 500 — ошибка при выполнении операции;
-   - 400 — Bad Request (при нехватке полей)
-   - 200 — успех.
-- message — строка:
-   - Причина ошибки (если она была);
-   - Отправлено успешно;
-- id идентификатор записи в базе данных, если отправка успешна
-
-## Получить запись по идентификатору
-Для получения всей информации об объекте, в том числе статус модерации, по id: `http://127.0.0.1:8000/get/id/`
-
-## Получить все записи пользователя по email
-Для получения списка данных обо всех объектах, которые пользователь с почтой email отправил на сервер: `http://127.0.0.1:8000/get/?user__email=<email>`
-
-## Редактирование записи
-Редактировать можно только записи, находящиеся в процессе модерации со статусом new.
-
-Для редактирования записи по идентификатору: `http://127.0.0.1:8000/patch/id/`
-
-Изменяемые поля вводятся в формате JSON, например:
-```
-{
-  "coords": {
-            "latitude": 10.3456
-   }
-}
-```
-Редактировать можно все поля, кроме пользовательских данных.
-
-Результат метода:
-- state — целое число:
-   - 405 — ошибка при выполнении операции;
-   - 1 — успех.
-
